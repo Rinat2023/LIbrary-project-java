@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.Arrays;
 
 public class Library {
@@ -23,6 +24,32 @@ public class Library {
     // посмотреть доступные книги - Нурис
     // посмотреть занятые книги - Марсель
     // Забронировать книгу - Ринат
+
+    public String bronBook(int bookId, int clientId, LocalDate startDate, LocalDate endDate) {
+        Client client = null;
+        for (int i = 0; i < clients.length; i++) {
+            if (clientId == i) {
+                client = clients[i];
+            }
+            ;
+        }
+        Book book = null;
+        for (int i = 0; i < books.length; i++) {
+            if (bookId == i) {
+                book = books[i];
+                if (!books[i].isAvailable()) {
+                    books[i].setAvailable(true);
+                }
+            }
+            books[i] = book;
+        }
+        Bron bronBook = new Bron(client, book, startDate, endDate, 0);
+        Bron[] newBrons = new Bron[brons.length + 1];
+        newBrons[brons.length - 1] = bronBook;
+        brons = newBrons;
+        return "Книга успешно забронировано";
+    }
+
     // Вернуть книгу - Алтынай
     // Выход - я
 
@@ -78,10 +105,10 @@ public class Library {
     public String toString() {
         return "Library: " +
                 "name='" + name + '\n' +
-                "address='" + address +  '\n' +
-                "balance='" + balance +  '\n' +
-                "books=" + Arrays.toString(books) +  '\n' +
-                "brons=" + Arrays.toString(brons) +  '\n' +
-                "clients=" + Arrays.toString(clients) ;
+                "address='" + address + '\n' +
+                "balance='" + balance + '\n' +
+                "books=" + Arrays.toString(books) + '\n' +
+                "brons=" + Arrays.toString(brons) + '\n' +
+                "clients=" + Arrays.toString(clients);
     }
 }
